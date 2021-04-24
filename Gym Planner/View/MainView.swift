@@ -72,7 +72,7 @@ struct MainView: View {
                                     .font(.title3)
                                     .foregroundColor(Color(.gray))
                                 if (userhasexercisedata.weight > 0) {
-                                    Text("\(userhasexercisedata.weight) Kg")
+                                    Text("\(userhasexercisedata.weight, specifier: "%.2f") Kg")
                                         .font(.title3)
                                         .foregroundColor(Color(.gray))
                                 }
