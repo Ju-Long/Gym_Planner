@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2727435E26286CBA00D4BE20 /* unconfirmedUserHasExerciseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2727435D26286CBA00D4BE20 /* unconfirmedUserHasExerciseData.swift */; };
 		2733CC372618A83B00234DAC /* UserHasExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2733CC362618A83B00234DAC /* UserHasExercise.swift */; };
-		2733CC3B2618A85100234DAC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2733CC3A2618A85100234DAC /* User.swift */; };
 		273CDAF6261894A900BD8923 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273CDAF5261894A900BD8923 /* AppDelegate.swift */; };
 		273CDAF8261894A900BD8923 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273CDAF7261894A900BD8923 /* SceneDelegate.swift */; };
 		273CDAFA261894A900BD8923 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273CDAF9261894A900BD8923 /* ContentView.swift */; };
@@ -25,19 +23,20 @@
 		273CDB2D26189CF900BD8923 /* DeleteRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273CDB2C26189CF900BD8923 /* DeleteRow.swift */; };
 		273CDB3026189D0500BD8923 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273CDB2F26189D0500BD8923 /* SignupView.swift */; };
 		273CDB3326189D0C00BD8923 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273CDB3226189D0C00BD8923 /* LoginView.swift */; };
-		273CDB3C26189D4300BD8923 /* unconfirmExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273CDB3B26189D4300BD8923 /* unconfirmExercise.swift */; };
+		273CDB3C26189D4300BD8923 /* SelectedExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273CDB3B26189D4300BD8923 /* SelectedExercise.swift */; };
+		275D130626343EE300EBE8EF /* RoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275D130526343EE300EBE8EF /* RoundedCorners.swift */; };
 		2768DF9E262B105600F3F44B /* AddNewExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2768DF9D262B105600F3F44B /* AddNewExerciseView.swift */; };
 		2768DFA3262B227C00F3F44B /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2768DFA2262B227C00F3F44B /* ImagePicker.swift */; };
 		2768DFA8262B35C500F3F44B /* EditExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2768DFA7262B35C500F3F44B /* EditExerciseView.swift */; };
 		276A2A5426273F2F0075A906 /* dataOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276A2A5326273F2F0075A906 /* dataOutput.swift */; };
+		278C6599263450E700E871BC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278C6598263450E700E871BC /* User.swift */; };
+		278C65A02634556400E871BC /* SelectedUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278C659F2634556400E871BC /* SelectedUser.swift */; };
 		27BC59672622EFC700F977B9 /* UserHasExerciseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BC59662622EFC700F977B9 /* UserHasExerciseData.swift */; };
 		27BC596B2622FF9600F977B9 /* Gym_Planner.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 27BC59692622FF9600F977B9 /* Gym_Planner.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2727435D26286CBA00D4BE20 /* unconfirmedUserHasExerciseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = unconfirmedUserHasExerciseData.swift; sourceTree = "<group>"; };
 		2733CC362618A83B00234DAC /* UserHasExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHasExercise.swift; sourceTree = "<group>"; };
-		2733CC3A2618A85100234DAC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		273CDAF2261894A900BD8923 /* Gym Planner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gym Planner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		273CDAF5261894A900BD8923 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		273CDAF7261894A900BD8923 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -55,11 +54,14 @@
 		273CDB2C26189CF900BD8923 /* DeleteRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteRow.swift; sourceTree = "<group>"; };
 		273CDB2F26189D0500BD8923 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
 		273CDB3226189D0C00BD8923 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		273CDB3B26189D4300BD8923 /* unconfirmExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = unconfirmExercise.swift; sourceTree = "<group>"; };
+		273CDB3B26189D4300BD8923 /* SelectedExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedExercise.swift; sourceTree = "<group>"; };
+		275D130526343EE300EBE8EF /* RoundedCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorners.swift; sourceTree = "<group>"; };
 		2768DF9D262B105600F3F44B /* AddNewExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewExerciseView.swift; sourceTree = "<group>"; };
 		2768DFA2262B227C00F3F44B /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		2768DFA7262B35C500F3F44B /* EditExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditExerciseView.swift; sourceTree = "<group>"; };
 		276A2A5326273F2F0075A906 /* dataOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataOutput.swift; sourceTree = "<group>"; };
+		278C6598263450E700E871BC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		278C659F2634556400E871BC /* SelectedUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedUser.swift; sourceTree = "<group>"; };
 		27BC59662622EFC700F977B9 /* UserHasExerciseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHasExerciseData.swift; sourceTree = "<group>"; };
 		27BC596A2622FF9600F977B9 /* Gym_Planner.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Gym_Planner.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -95,13 +97,13 @@
 			isa = PBXGroup;
 			children = (
 				273CDAF5261894A900BD8923 /* AppDelegate.swift */,
-				27BC59692622FF9600F977B9 /* Gym_Planner.xcdatamodeld */,
 				273CDAF7261894A900BD8923 /* SceneDelegate.swift */,
 				273CDB1226189C6A00BD8923 /* Controller */,
 				273CDB0D261894C800BD8923 /* View */,
-				273CDAFE261894A900BD8923 /* Assets.xcassets */,
-				273CDB03261894A900BD8923 /* LaunchScreen.storyboard */,
+				27BC59692622FF9600F977B9 /* Gym_Planner.xcdatamodeld */,
 				273CDB06261894A900BD8923 /* Info.plist */,
+				273CDB03261894A900BD8923 /* LaunchScreen.storyboard */,
+				273CDAFE261894A900BD8923 /* Assets.xcassets */,
 				273CDB00261894A900BD8923 /* Preview Content */,
 			);
 			path = "Gym Planner";
@@ -120,13 +122,13 @@
 			children = (
 				273CDAF9261894A900BD8923 /* ContentView.swift */,
 				273CDB1326189C9700BD8923 /* MenuView.swift */,
-				273CDB1726189CA100BD8923 /* CardViewRow.swift */,
-				273CDB1A26189CB200BD8923 /* MainView.swift */,
-				2768DFA6262B35B300F3F44B /* Edit */,
+				275D130426343ECB00EBE8EF /* Custom Assets */,
+				273CDB1D26189CB500BD8923 /* Login */,
+				273CDB1F26189CBC00BD8923 /* Signup */,
+				275D130926343F1700EBE8EF /* Main */,
 				273CDB2126189CC900BD8923 /* Add */,
 				273CDB2026189CC300BD8923 /* Delete */,
-				273CDB1F26189CBC00BD8923 /* Signup */,
-				273CDB1D26189CB500BD8923 /* Login */,
+				2768DFA6262B35B300F3F44B /* Edit */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -134,13 +136,13 @@
 		273CDB1226189C6A00BD8923 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				273CDB3B26189D4300BD8923 /* unconfirmExercise.swift */,
-				2727435D26286CBA00D4BE20 /* unconfirmedUserHasExerciseData.swift */,
-				2733CC362618A83B00234DAC /* UserHasExercise.swift */,
-				2733CC3A2618A85100234DAC /* User.swift */,
 				276A2A5326273F2F0075A906 /* dataOutput.swift */,
-				27BC59662622EFC700F977B9 /* UserHasExerciseData.swift */,
 				2768DFA2262B227C00F3F44B /* ImagePicker.swift */,
+				273CDB3B26189D4300BD8923 /* SelectedExercise.swift */,
+				278C659F2634556400E871BC /* SelectedUser.swift */,
+				278C6598263450E700E871BC /* User.swift */,
+				2733CC362618A83B00234DAC /* UserHasExercise.swift */,
+				27BC59662622EFC700F977B9 /* UserHasExerciseData.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -164,8 +166,8 @@
 		273CDB2026189CC300BD8923 /* Delete */ = {
 			isa = PBXGroup;
 			children = (
-				273CDB2926189CEF00BD8923 /* DeleteView.swift */,
 				273CDB2C26189CF900BD8923 /* DeleteRow.swift */,
+				273CDB2926189CEF00BD8923 /* DeleteView.swift */,
 			);
 			path = Delete;
 			sourceTree = "<group>";
@@ -178,6 +180,23 @@
 				2768DF9D262B105600F3F44B /* AddNewExerciseView.swift */,
 			);
 			path = Add;
+			sourceTree = "<group>";
+		};
+		275D130426343ECB00EBE8EF /* Custom Assets */ = {
+			isa = PBXGroup;
+			children = (
+				275D130526343EE300EBE8EF /* RoundedCorners.swift */,
+			);
+			path = "Custom Assets";
+			sourceTree = "<group>";
+		};
+		275D130926343F1700EBE8EF /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				273CDB1726189CA100BD8923 /* CardViewRow.swift */,
+				273CDB1A26189CB200BD8923 /* MainView.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 		2768DFA6262B35B300F3F44B /* Edit */ = {
@@ -266,6 +285,7 @@
 			files = (
 				27BC596B2622FF9600F977B9 /* Gym_Planner.xcdatamodeld in Sources */,
 				273CDB2A26189CEF00BD8923 /* DeleteView.swift in Sources */,
+				275D130626343EE300EBE8EF /* RoundedCorners.swift in Sources */,
 				273CDAF6261894A900BD8923 /* AppDelegate.swift in Sources */,
 				273CDB1B26189CB200BD8923 /* MainView.swift in Sources */,
 				273CDB3326189D0C00BD8923 /* LoginView.swift in Sources */,
@@ -273,19 +293,19 @@
 				273CDB1426189C9700BD8923 /* MenuView.swift in Sources */,
 				2733CC372618A83B00234DAC /* UserHasExercise.swift in Sources */,
 				273CDB2326189CDB00BD8923 /* AddExerciseView.swift in Sources */,
-				2733CC3B2618A85100234DAC /* User.swift in Sources */,
 				273CDAF8261894A900BD8923 /* SceneDelegate.swift in Sources */,
 				273CDB2726189CE500BD8923 /* ChooseNewExerciseView.swift in Sources */,
 				2768DFA8262B35C500F3F44B /* EditExerciseView.swift in Sources */,
-				273CDB3C26189D4300BD8923 /* unconfirmExercise.swift in Sources */,
+				273CDB3C26189D4300BD8923 /* SelectedExercise.swift in Sources */,
 				273CDB2D26189CF900BD8923 /* DeleteRow.swift in Sources */,
-				2727435E26286CBA00D4BE20 /* unconfirmedUserHasExerciseData.swift in Sources */,
 				273CDB3026189D0500BD8923 /* SignupView.swift in Sources */,
 				2768DFA3262B227C00F3F44B /* ImagePicker.swift in Sources */,
 				273CDB1826189CA100BD8923 /* CardViewRow.swift in Sources */,
 				2768DF9E262B105600F3F44B /* AddNewExerciseView.swift in Sources */,
 				273CDAFA261894A900BD8923 /* ContentView.swift in Sources */,
 				27BC59672622EFC700F977B9 /* UserHasExerciseData.swift in Sources */,
+				278C6599263450E700E871BC /* User.swift in Sources */,
+				278C65A02634556400E871BC /* SelectedUser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -5,9 +5,7 @@ struct AddNewExerciseView: View {
     @State private var showingImagePicker = false
     @State private var image: Image?
     @State private var inputImage: UIImage?
-    @Binding var user_id: Int
-    @Binding var username: String
-    @Binding var user_password: String
+    @Binding var user: SelectedUser
     @Binding var showAddExercise: Bool
     var body: some View {
         NavigationView {
@@ -93,7 +91,7 @@ struct AddNewExerciseView: View {
     }
     
     func addExercise() {
-        let url = URL(string: "https://babasama.com/new_exercise?exercise_name=\(exercise_name)&exercise_image=\(exercise_name)&user_id=\(user_id)&username=\(username)&user_password=\(user_password)")
+        let url = URL(string: "https://babasama.com/new_exercise?exercise_name=\(exercise_name)&exercise_image=\(exercise_name)&user_id=\(user.user_id)&username=\(user.username)&user_password=\(user.user_password)")
         print(url!)
         let request = URLRequest(url: url!)
         URLSession.shared.dataTask(with: request) { data, response, error  in

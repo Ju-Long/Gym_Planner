@@ -5,9 +5,7 @@ struct ChooseNewExerciseView: View {
     @State private var showAddExercise = false
     @Binding var unconfirmed: SelectedExercise
     @Binding var showChoose: Bool
-    @Binding var user_id: Int
-    @Binding var username: String
-    @Binding var user_password: String
+    @Binding var user: SelectedUser
     var body: some View {
         NavigationView {
             VStack {
@@ -40,13 +38,13 @@ struct ChooseNewExerciseView: View {
             })))
             .onAppear(perform: loadExercise)
             .sheet(isPresented: $showAddExercise, content: {
-                AddNewExerciseView(user_id: $user_id, username: $username, user_password: $user_password, showAddExercise: $showAddExercise)
+                AddNewExerciseView(user: $user, showAddExercise: $showAddExercise)
             })
         }
     }
     
     func loadExercise() {
-        guard let url = URL(string: "https://babasama.com/user_has_exercise?user_id=\(user_id)&user_password=\(user_password)") else {
+        guard let url = URL(string: "https://babasama.com/user_has_exercise?user_id=\(user.user_id)&user_password=\(user.user_password)") else {
             print("Your API end point is invalid")
             return
         }

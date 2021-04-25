@@ -9,9 +9,7 @@ struct AddExerciseView: View {
     @State private var showWeight = false
     @State private var showAlert = false
     @Binding var showMenu: Bool
-    @Binding var user_id: Int
-    @Binding var username: String
-    @Binding var user_password: String
+    @Binding var user: SelectedUser
     static let mainDateFormat: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd.MM.y"
@@ -55,12 +53,11 @@ struct AddExerciseView: View {
                                     .font(.headline)
                                 Text(">")
                                     .foregroundColor(.gray)
-                            }
-                        })
+                            }})
                         .sheet(isPresented: $showChoose, content: {
-                            ChooseNewExerciseView(unconfirmed: $exercise, showChoose: $showChoose, user_id: $user_id, username: $username, user_password: $user_password)
-                        })
-                    }.frame(height: 40)
+                            ChooseNewExerciseView(unconfirmed: $exercise, showChoose: $showChoose, user: $user)
+                        })}
+                        .frame(height: 40)
                     
                     HStack {
                         Text("Choose The Amount of Sets")
@@ -77,9 +74,8 @@ struct AddExerciseView: View {
                                     .font(.headline)
                                 Text(self.showSet ? "⌄" : ">")
                                     .foregroundColor(.gray)
-                            }
-                        })
-                    }.frame(height: 40)
+                            }})}
+                        .frame(height: 40)
                     
                     if showSet {
                         HStack {
@@ -87,10 +83,7 @@ struct AddExerciseView: View {
                             Picker("", selection: $exercise.sets) {
                                 ForEach(0..<31) { index in
                                     Text("\(index)").tag(index)
-                                }
-                            }
-                        }
-                    }
+                                }}}}
                     
                     HStack {
                         Text("Choose The Amount of Reps")
@@ -107,9 +100,8 @@ struct AddExerciseView: View {
                                     .font(.headline)
                                 Text(self.showRep ? "⌄" : ">")
                                     .foregroundColor(.gray)
-                            }
-                        })
-                    }.frame(height: 40)
+                            }})}
+                        .frame(height: 40)
                     
                     if showRep {
                         HStack {
@@ -117,10 +109,7 @@ struct AddExerciseView: View {
                             Picker("", selection: $exercise.reps) {
                                 ForEach(0..<31) { index in
                                     Text("\(index)").tag(index)
-                                }
-                            }
-                        }
-                    }
+                                }}}}
                     
                     HStack {
                         Text("Choose The Weight (optional)")
@@ -137,9 +126,8 @@ struct AddExerciseView: View {
                                     .font(.headline)
                                 Text(self.showWeight ? "⌄" : ">")
                                     .foregroundColor(.gray)
-                            }
-                        })
-                    }.frame(height: 40)
+                            }})}
+                        .frame(height: 40)
                     
                     if showWeight {
                         HStack {
@@ -147,11 +135,7 @@ struct AddExerciseView: View {
                             Picker("", selection: $exercise.weight) {
                                 ForEach(Array(stride(from: 0, to: 500, by: 2.5)), id:\.self) { index in
                                     Text("\(index, specifier: "%.1f")").tag(index)
-                                }
-                            }
-                        }
-                    }
-                }
+                                }}}}}
                 .listStyle(PlainListStyle())
                 Button(action: {
                     showAlert.toggle()
@@ -182,8 +166,7 @@ struct AddExerciseView: View {
     }
     
     func addNewExercise() {
-//        print("user_id: \(user_id) username:\(username) user_password: \(user_password) user_has_exercise_id: \(exercise.user_has_exercise_id) sets: \(exercise.sets) reps: \(exercise.reps) weight: \(exercise.weight) date: \(exercise.date)")
-        let url = URL(string: "https://babasama.com/add_user_has_exercise_data?user_id=\(user_id)&username=\(username)&user_password=\(user_password)&user_has_exercise_id=\(exercise.user_has_exercise_id)&sets=\(exercise.sets)&reps=\(exercise.reps)&weight=\(exercise.weight)&date=\(Int(exercise.date.timeIntervalSince1970 * 1000))")
+        let url = URL(string: "https://babasama.com/add_user_has_exercise_data?user_id=\(user.user_id)&username=\(user.username)&user_password=\(user.user_password)&user_has_exercise_id=\(exercise.user_has_exercise_id)&sets=\(exercise.sets)&reps=\(exercise.reps)&weight=\(exercise.weight)&date=\(Int(exercise.date.timeIntervalSince1970 * 1000))")
         print(url!)
         let request = URLRequest(url: url!)
         URLSession.shared.dataTask(with: request) { data, response, error  in

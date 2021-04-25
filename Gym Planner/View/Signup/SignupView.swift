@@ -2,28 +2,25 @@ import SwiftUI
 
 struct SignupView: View {
     @State var error = ""
-    @State var user_email = ""
-    @Binding var user_id: Int
-    @Binding var username: String
-    @Binding var user_password: String
+    @Binding var user: SelectedUser
     @Binding var showLogin: Bool
     @Binding var showMain: Bool
     @Binding var showSignup: Bool
     var body: some View {
         VStack {
-            TextField("Username", text: $username)
+            TextField("Username", text: $user.username)
                 .padding(.horizontal, 15)
                 .frame(width: maxWidth * 0.8, height: 40)
                 .overlay(RoundedRectangle(cornerRadius: 7)
                             .stroke(Color.black, lineWidth: 2))
                 .padding(.bottom, 10)
-            TextField("Email", text: $user_email)
+            TextField("Email", text: $user.user_email)
                 .padding(.horizontal, 15)
                 .frame(width: maxWidth * 0.8, height: 40)
                 .overlay(RoundedRectangle(cornerRadius: 7)
                             .stroke(Color.black, lineWidth: 2))
                 .padding(.bottom, 10)
-            TextField("Password", text: $user_password)
+            TextField("Password", text: $user.user_password)
                 .padding(.horizontal, 15)
                 .frame(width: maxWidth * 0.8, height: 40)
                 .overlay(RoundedRectangle(cornerRadius: 7)
@@ -54,7 +51,7 @@ struct SignupView: View {
     }
     
     func signup() {
-        let url = URL(string: "https://babasama.com/new_user?username=\(username)&user_email=\(user_email)&user_password=\(user_password)")
+        let url = URL(string: "https://babasama.com/new_user?username=\(user.username)&user_email=\(user.user_email)&user_password=\(user.user_password)")
         let request = URLRequest(url: url!)
         URLSession.shared.dataTask(with: request) { data, response, error  in
             guard let data = data else {
@@ -62,14 +59,14 @@ struct SignupView: View {
                 return
             }
             if let decoded = try? JSONDecoder().decode([User].self, from: data) {
-                user_id = decoded[0].user_id
+                user.user_id = decoded[0].user_id
                 showSignup = false
                 showLogin = false
                 showMain = true
             } else {
-                username = ""
-                user_email = ""
-                user_password = ""
+                user.username = ""
+                user.user_email = ""
+                user.user_password = ""
                 self.error = "User Already Exist"
             }
         }.resume()

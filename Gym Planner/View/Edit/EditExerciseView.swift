@@ -8,16 +8,15 @@
 import SwiftUI
 
 struct EditExerciseView: View {
+    @Environment(\.presentationMode) var presentationMode
+    
     @State private var showAlert = false
     @State private var showSet = false
     @State private var showRep = false
     @State private var showWeight = false
     @State private var showChoose = false
     @Binding var showEdit: Bool
-    @Binding var showMenu: Bool
-    @Binding var user_id: Int
-    @Binding var username: String
-    @Binding var user_password: String
+    @Binding var user: SelectedUser
     @Binding var exercise: SelectedExercise
     
     static let mainDateFormat: DateFormatter = {
@@ -51,23 +50,12 @@ struct EditExerciseView: View {
                 .colorMultiply(Color(.orange))
                 List {
                     HStack {
-                        Text("Choose an Exercise")
+                        Text("Your Exercise")
                             .font(.headline)
                         Spacer()
-                        Button(action: {
-                            showChoose.toggle()
-                        }, label: {
-                            HStack {
-                                Text("\(exercise.name)")
-                                    .foregroundColor(Color(.orange))
-                                    .font(.headline)
-                                Text(">")
-                                    .foregroundColor(.gray)
-                            }
-                        })
-                        .sheet(isPresented: $showChoose, content: {
-                            ChooseNewExerciseView(unconfirmed: $exercise, showChoose: $showChoose, user_id: $user_id, username: $username, user_password: $user_password)
-                        })
+                        Text("\(exercise.name)")
+                            .foregroundColor(Color(.orange))
+                            .font(.headline)
                     }.frame(height: 40)
                     
                     HStack {
@@ -164,7 +152,7 @@ struct EditExerciseView: View {
                 Button(action: {
                     showAlert.toggle()
                 }, label: {
-                    Text("Schedule")
+                    Text("Update")
                         .foregroundColor(.white)
                 })
                 .frame(width: maxWidth*0.4, height: 70, alignment: .center)
@@ -180,17 +168,15 @@ struct EditExerciseView: View {
                 })
             }
             .navigationBarItems(leading: (Button(action: {
-                showMenu.toggle()
+                presentationMode.wrappedValue.dismiss()
             }, label: {
-                Image(self.showMenu ? "clear" : "menu-icon")
-                    .resizable()
-                    .frame(width: 30, height: 30)
+                Text("< Back to Home Page")
             })))
         }
     }
     
     func editExercise() {
-        let url = URL(string: "edit_user_has_exercise_data?username=\(username)&user_password=\(user_password)&user_has_exercise_id=\(exercise.user_has_exercise_id)&sets=\(exercise.sets)&reps=\(exercise.reps)&sets_done=\(exercise.sets_done)&weight=\(exercise.weight)&date=\(Int(exercise.date.timeIntervalSince1970 * 1000))")
+        let url = URL(string: "edit_user_has_exercise_data?username=\(user.username)&user_password=\(user.user_password)&data_id=\(exercise.data_id)&sets=\(exercise.sets)&reps=\(exercise.reps)&sets_done=\(exercise.sets_done)&weight=\(exercise.weight)&date=\(Int(exercise.date.timeIntervalSince1970 * 1000))")
         print(url!)
         let request = URLRequest(url: url!)
         URLSession.shared.dataTask(with: request) { data, response, error  in
@@ -201,6 +187,7 @@ struct EditExerciseView: View {
             if let decoded = try? JSONDecoder().decode([dataOutput].self, from: data) {
                 print(decoded)
             }
+            presentationMode.wrappedValue.dismiss()
         }.resume()
     }
 }
