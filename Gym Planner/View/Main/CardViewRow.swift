@@ -3,8 +3,10 @@ import SwiftUI
 struct CardViewRow: View {
     @State var showEdit = false
     @State var selectedExercise = SelectedExercise()
+    @State var showMessage = ""
     var userHasExercise: UserHasExerciseData
     @Binding var user: SelectedUser
+    @Binding var loading: Bool
     var body: some View {
         VStack(spacing: 5) {
             Text("\(userHasExercise.exercise_name)")
@@ -51,10 +53,9 @@ struct CardViewRow: View {
                     .foregroundColor(Color(.gray))
             }
             Button(action: {
-                selectedExercise.data_id = userHasExercise.data_id
-                selectedExercise.weight = userHasExercise.weight
+                new_set()
             }, label: {
-                Text("")
+                Text(showMessage)
                     .frame(width: 50, height: 50, alignment: .center)
                     .overlay(Circle().stroke(Color.black, lineWidth: 1))
             })
@@ -62,7 +63,7 @@ struct CardViewRow: View {
     }
     
     func new_set() {
-        let url = URL(string: "")
+        let url = URL(string: "https://babasama.com/new_set_done?data_id=\(userHasExercise.data_id)&sets_done=\(userHasExercise.sets_done + 1)&date=\(Int(userHasExercise.date.timeIntervalSince1970 * 1000))&username=\(user.username)&user_password=\(user.user_password)")
         print(url!)
         let request = URLRequest(url: url!)
         URLSession.shared.dataTask(with: request) { data, response, error  in
@@ -72,6 +73,11 @@ struct CardViewRow: View {
             }
             if let decoded = try? JSONDecoder().decode([dataOutput].self, from: data) {
                 print(decoded)
+                showMessage = "👍"
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
+                    showMessage = ""
+                    loading = true
+                }
             }
         }.resume()
     }

@@ -15,6 +15,7 @@ struct EditExerciseView: View {
     @State private var showRep = false
     @State private var showWeight = false
     @State private var showChoose = false
+    @State private var showConfirmation = false
     @Binding var showEdit: Bool
     @Binding var user: SelectedUser
     @Binding var exercise: SelectedExercise

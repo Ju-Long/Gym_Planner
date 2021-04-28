@@ -3,6 +3,7 @@ import SwiftUI
 struct MainView: View {
     @State private var userhasexercisedata = [UserHasExerciseData]()
     @State private var currentdata = SelectedExercise()
+    @State private var loading = false
     @Binding var showMenu: Bool
     @Binding var showMain: Bool
     @Binding var user: SelectedUser
@@ -29,7 +30,7 @@ struct MainView: View {
                 ScrollView {
                     if userhasexercisedata.count > 0 {
                         ForEach (userhasexercisedata){ data in
-                            CardViewRow(userHasExercise: data, user: $user)
+                            CardViewRow(userHasExercise: data, user: $user, loading: $loading)
                         }
                         .listStyle(PlainListStyle())
                         .frame(alignment: .center)
@@ -60,6 +61,7 @@ struct MainView: View {
                 if let response = try? JSONDecoder().decode([UserHasExerciseData].self, from: data) {
                     DispatchQueue.main.async {
                         self.userhasexercisedata = response
+                        loading = false
                     }
                     return
                 }
@@ -67,3 +69,4 @@ struct MainView: View {
         }.resume()
     }
 }
+
