@@ -4,6 +4,8 @@ struct DeleteView: View {
     @State var userHasExerciseData = [UserHasExerciseData]()
     @State var data = SelectedExercise()
     @State private var showingActionSheet = false
+    @State private var showComplete = false
+    @State private var message = ""
     @Binding var showMenu: Bool
     @Binding var user: SelectedUser
     static let mainDateFormat: DateFormatter = {
@@ -32,7 +34,7 @@ struct DeleteView: View {
                     .padding(.top, 30)
                 if userHasExerciseData.count > 0 {
                     List (userHasExerciseData) { userhasexercisedata in
-                        DeleteRow(user: $user, data: userhasexercisedata)
+                        DeleteRow(user: $user, showComplete: $showComplete, message: $message, data: userhasexercisedata)
                     }
                     .listStyle(PlainListStyle())
                 } else {
@@ -40,6 +42,12 @@ struct DeleteView: View {
                         .frame(height: maxHeight * 0.75)
                 }
             }
+            .alert(isPresented: $showComplete, content: {
+                Alert(title: Text(message), dismissButton: .default(Text("Ok"), action: {
+                    showComplete = false
+                    loadExerciseData()
+                }))
+            })
             .navigationBarItems(leading: (Button(action: {
                 showMenu.toggle()
             }, label: {
@@ -52,7 +60,7 @@ struct DeleteView: View {
     }
     
     func loadExerciseData() {
-        guard let url = URL(string: "https://babasama.com/user_has_exercise_data?user_id=\(user.user_id)&user_password=\(user.user_password)") else {
+        guard let url = URL(string: "https://babasama.com/user_has_exercise_data?user_id=\(user.user_id)&user_password=\(user.user_password)&day=everyday") else {
             print("Your API end point is invalid")
             return
         }

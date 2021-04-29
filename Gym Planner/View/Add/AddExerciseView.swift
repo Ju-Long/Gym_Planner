@@ -8,8 +8,12 @@ struct AddExerciseView: View {
     @State private var showRep = false
     @State private var showWeight = false
     @State private var showAlert = false
+    @State private var showComplete = false
+    @State private var message = ""
     @Binding var showMenu: Bool
     @Binding var user: SelectedUser
+    @Binding var showMain: Bool
+    @Binding var showAdd: Bool
     static let mainDateFormat: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd.MM.y"
@@ -126,7 +130,15 @@ struct AddExerciseView: View {
                                     .font(.headline)
                                 Text(self.showWeight ? "⌄" : ">")
                                     .foregroundColor(.gray)
-                            }})}
+                            }})
+                        .alert(isPresented: $showComplete, content: {
+                            Alert(title: Text(message), dismissButton: .default(Text("Ok"), action: {
+                                showComplete = false
+                                showAdd = false
+                                showMain = true
+                            }))
+                        })
+                    }
                         .frame(height: 40)
                     
                     if showWeight {
@@ -167,7 +179,6 @@ struct AddExerciseView: View {
     
     func addNewExercise() {
         let url = URL(string: "https://babasama.com/add_user_has_exercise_data?user_id=\(user.user_id)&username=\(user.username)&user_password=\(user.user_password)&user_has_exercise_id=\(exercise.user_has_exercise_id)&sets=\(exercise.sets)&reps=\(exercise.reps)&weight=\(exercise.weight)&date=\(Int(exercise.date.timeIntervalSince1970 * 1000))")
-        print(url!)
         let request = URLRequest(url: url!)
         URLSession.shared.dataTask(with: request) { data, response, error  in
             guard let data = data else {
@@ -175,7 +186,8 @@ struct AddExerciseView: View {
                 return
             }
             if let decoded = try? JSONDecoder().decode([dataOutput].self, from: data) {
-                print(decoded)
+                showComplete = true
+                message = decoded[0].output
             }
         }.resume()
     }

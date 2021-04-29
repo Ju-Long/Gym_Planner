@@ -13,6 +13,9 @@ struct ContentView: View {
     @State var showDelete = false
     
     var body: some View {
+        if self.showLogin {
+            LoginView(user: $user, showLogin: $showLogin, showMain: $showMain)
+        }
         let drag = DragGesture()
             .onChanged {
                 if $0.translation.width > 100 {
@@ -29,9 +32,6 @@ struct ContentView: View {
                 }
             }
         ZStack(alignment: .leading) {
-            if self.showLogin {
-                LoginView(user: $user, showLogin: $showLogin, showMain: $showMain)
-            }
             if self.showMain {
                 MainView(showMenu: $showMenu, showMain: $showMain, user: $user)
                     .offset(x: self.showMenu ? maxWidth*0.7 : 0)
@@ -39,7 +39,7 @@ struct ContentView: View {
                     .transition(.move(edge: .leading))
                     .animation(.easeInOut(duration: 0.3))
             } else if self.showAdd {
-                AddExerciseView(showMenu: $showMenu, user: $user)
+                AddExerciseView(showMenu: $showMenu, user: $user, showMain: $showMain, showAdd: $showAdd)
                     .offset(x: self.showMenu ? maxWidth*0.7 : 0)
                     .disabled(self.showMenu ? true : false)
                     .transition(.move(edge: .leading))

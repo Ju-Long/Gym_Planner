@@ -16,6 +16,8 @@ struct EditExerciseView: View {
     @State private var showWeight = false
     @State private var showChoose = false
     @State private var showConfirmation = false
+    @State private var showComplete = false
+    @State private var message = ""
     @Binding var showEdit: Bool
     @Binding var user: SelectedUser
     @Binding var exercise: SelectedExercise
@@ -43,7 +45,7 @@ struct EditExerciseView: View {
                 DatePicker (
                     "",
                     selection: $exercise.date,
-                    in: Date()...,
+                    in: Date()...Date(),
                     displayedComponents: .date
                 )
                 .datePickerStyle(GraphicalDatePickerStyle())
@@ -136,6 +138,12 @@ struct EditExerciseView: View {
                                     .foregroundColor(.gray)
                             }
                         })
+                        .alert(isPresented: $showComplete, content: {
+                            Alert(title: Text(message), dismissButton: .default(Text("Ok"), action: {
+                                showComplete = false
+                                presentationMode.wrappedValue.dismiss()
+                            }))
+                        })
                     }.frame(height: 40)
                     
                     if showWeight {
@@ -162,8 +170,8 @@ struct EditExerciseView: View {
                     if (exercise.name == "Please Select" || exercise.sets == 0 || exercise.reps == 0) {
                         return Alert(title: Text("Please choose at least an exercise and more than 0 sets and reps"), dismissButton: .default(Text("Ok")))
                     } else  {
-                        return Alert(title: Text(exercise.date, formatter: Self.mainDateFormat), message: Text("\(exercise.name) \n\(exercise.sets) Sets, \(exercise.reps) Reps, \(exercise.weight, specifier: "%.2f") Kg"), primaryButton: .cancel(), secondaryButton: .default(Text("Schedule"), action: {
-//                            addNewExercise()
+                        return Alert(title: Text(exercise.date, formatter: Self.mainDateFormat), message: Text("\(exercise.name) \n\(exercise.sets) Sets, \(exercise.reps) Reps, \(exercise.weight, specifier: "%.2f") Kg"), primaryButton: .cancel(), secondaryButton: .default(Text("Update"), action: {
+                            editExercise()
                         }))
                     }
                 })
@@ -177,8 +185,7 @@ struct EditExerciseView: View {
     }
     
     func editExercise() {
-        let url = URL(string: "edit_user_has_exercise_data?username=\(user.username)&user_password=\(user.user_password)&data_id=\(exercise.data_id)&sets=\(exercise.sets)&reps=\(exercise.reps)&sets_done=\(exercise.sets_done)&weight=\(exercise.weight)&date=\(Int(exercise.date.timeIntervalSince1970 * 1000))")
-        print(url!)
+        let url = URL(string: "https://babasama.com/edit_user_has_exercise_data?username=\(user.username)&user_password=\(user.user_password)&data_id=\(exercise.data_id)&sets=\(exercise.sets)&reps=\(exercise.reps)&sets_done=\(exercise.sets_done)&weight=\(exercise.weight)&date=\(Int(exercise.date.timeIntervalSince1970 * 1000))")
         let request = URLRequest(url: url!)
         URLSession.shared.dataTask(with: request) { data, response, error  in
             guard let data = data else {
@@ -186,9 +193,9 @@ struct EditExerciseView: View {
                 return
             }
             if let decoded = try? JSONDecoder().decode([dataOutput].self, from: data) {
-                print(decoded)
+                message = decoded[0].output
+                showComplete = true
             }
-            presentationMode.wrappedValue.dismiss()
         }.resume()
     }
 }

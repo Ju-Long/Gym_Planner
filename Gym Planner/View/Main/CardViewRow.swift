@@ -1,19 +1,36 @@
 import SwiftUI
 
 struct CardViewRow: View {
-    @State var showEdit = false
     @State var selectedExercise = SelectedExercise()
     @State var showMessage = ""
+    @State var color = Color(.orange)
+    @Binding var showEdit: Bool
     var userHasExercise: UserHasExerciseData
     @Binding var user: SelectedUser
-    @Binding var loading: Bool
+    @Binding var message: String
+    static let mainDateFormat: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM.y"
+        return formatter
+    }()
+    var colors = [Color(.orange), Color(.blue), Color(.green)]
     var body: some View {
         VStack(spacing: 5) {
-            Text("\(userHasExercise.exercise_name)")
-                .frame(width: maxWidth*0.95, height: 30, alignment: .center)
-                .font(.title3)
-                .foregroundColor(.white)
-                .background(RoundedCorners(tl: 30, tr: 30, bl: 0, br: 0).fill(Color(.orange)))
+            HStack {
+                
+                Text("\(userHasExercise.exercise_name)")
+                    .frame(alignment: .center)
+                    .font(.title3)
+                    .foregroundColor(.white)
+                if message == "everyday" {
+                    Text(userHasExercise.date, formatter: Self.mainDateFormat)
+                        .frame(alignment: .trailing)
+                        .font(.title3)
+                        .foregroundColor(Color(.gray))
+                }
+            }
+                .frame(width: maxWidth*0.95, height: 30)
+            .background(RoundedCorners(tl: 30, tr: 30, bl: 0, br: 0).fill(color))
             HStack {
                 Text("")
                     .frame(width: (maxWidth*0.95/3))
@@ -60,6 +77,9 @@ struct CardViewRow: View {
                     .overlay(Circle().stroke(Color.black, lineWidth: 1))
             })
         }
+        .onAppear(perform: {
+            color = colors[Int.random(in: 0...2)]
+        })
     }
     
     func new_set() {
@@ -76,7 +96,6 @@ struct CardViewRow: View {
                 showMessage = "👍"
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
                     showMessage = ""
-                    loading = true
                 }
             }
         }.resume()

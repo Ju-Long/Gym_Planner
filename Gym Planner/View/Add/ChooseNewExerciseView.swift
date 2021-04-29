@@ -54,6 +54,9 @@ struct ChooseNewExerciseView: View {
                 if let response = try? JSONDecoder().decode([UserHasExercise].self, from: data) {
                     DispatchQueue.main.async {
                         self.userhasexercise = response
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                            loadExercise()
+                        }
                     }
                     return
                 }
