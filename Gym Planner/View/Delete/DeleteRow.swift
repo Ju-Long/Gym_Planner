@@ -46,7 +46,8 @@ struct DeleteRow: View {
     }
     
     func removeExercise() {
-        let url = URL(string: "https://babasama.com/delete_user_has_exercise_data?username=\(user.username)&user_password=\(user.user_password)&data_id=\(data.data_id)&date=\(Int(data.date.timeIntervalSince1970 * 1000))")
+        let url = URL(string: "https://babasama.com/gym_planner/delete_exercise_data?username=\(user.username)&password=\(user.user_password)&data_id=\(data.data_id)&date=\(Int(data.date.timeIntervalSince1970))")
+        print(url)
         let request = URLRequest(url: url!)
         URLSession.shared.dataTask(with: request) { data, response, error  in
             guard let data = data else {

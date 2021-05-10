@@ -3,8 +3,9 @@ import SwiftUI
 struct MainView: View {
     @State private var userhasexercisedata = [UserHasExerciseData]()
     @State private var currentdata = SelectedExercise()
-    @State private var message = "today"
+    @State private var message: Date = Date()
     @State private var showEdit = false
+    @State private var textColor = Color(.orange)
     @Binding var showMenu: Bool
     @Binding var showMain: Bool
     @Binding var user: SelectedUser
@@ -28,55 +29,41 @@ struct MainView: View {
                     .font(.subheadline)
                     .foregroundColor(Color(.gray))
                 HStack{
+                    Spacer()
                     Button(action: {
-                        message = "today"
+                        message = Date()
+                        textColor = Color(.orange)
                         loadExerciseData()
                     }, label: {
-                        if message == "today" {
-                            Text("Today")
-                                .foregroundColor(Color(.orange))
-                        } else {
-                            Text("Today")
-                                .foregroundColor(.gray)
-                        }
+                        Text("Today")
+                            .foregroundColor(textColor)
                     })
-                    Button(action: {
-                        message = "tomorrow"
+                    Button {
+                        textColor = Color(.gray)
                         loadExerciseData()
-                    }, label: {
-                        if message == "tomorrow" {
-                            Text("Tomorrow")
-                                .foregroundColor(Color(.orange))
-                        } else {
-                            Text("Tomorrow")
-                                .foregroundColor(.gray)
-                        }
-                    })
-                    Button(action: {
-                        message = "everyday"
-                        loadExerciseData()
-                    }, label: {
-                        if message == "everyday" {
-                            Text("Everyday")
-                                .foregroundColor(Color(.orange))
-                        } else {
-                            Text("Everyday")
-                                .foregroundColor(.gray)
-                        }
-                    })
+                    } label: {
+                        DatePicker (
+                            "",
+                            selection: $message,
+                            in: Date()...,
+                            displayedComponents: .date
+                        )
+                        .datePickerStyle(CompactDatePickerStyle())
+                    }
+
                 }
                 .frame(width: maxWidth * 0.9,alignment: .trailing)
                 .padding(.vertical, 15)
                 ScrollView {
                     if userhasexercisedata.count > 0 {
                         ForEach (userhasexercisedata){ data in
-                            CardViewRow(showEdit: $showEdit, userHasExercise: data, user: $user, message: $message)
+                            CardViewRow(showEdit: $showEdit, userHasExercise: data, user: $user)
                         }
                         .listStyle(PlainListStyle())
                         .frame(alignment: .center)
                         .padding(.bottom, 5)
                     } else {
-                        Text("There is no Exercise \(message)")
+                        Text("There is no Exercise \(message, formatter: Self.mainDateFormat)")
                             .padding(.top, 50)
                     }
                 }
@@ -92,10 +79,11 @@ struct MainView: View {
         }}
     
     func loadExerciseData() {
-        guard let url = URL(string: "https://babasama.com/user_has_exercise_data?user_id=\(user.user_id)&user_password=\(user.user_password)&day=\(message)") else {
+        guard let url = URL(string: "https://babasama.com/gym_planner/get_user_exercise_data?username=\(user.username)&password=\(user.user_password)&date=\(Int(message.timeIntervalSince1970))") else {
             print("Your API end point is invalid")
             return
         }
+        print(url)
         let request = URLRequest(url: url)
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
@@ -114,4 +102,3 @@ struct MainView: View {
         }.resume()
     }
 }
-

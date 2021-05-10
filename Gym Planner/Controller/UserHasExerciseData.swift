@@ -2,6 +2,7 @@ import Foundation
 struct UserHasExerciseData: Codable, Identifiable, Hashable {
     let id = UUID()
     let data_id: Int
+    let user_has_exercise_id: Int
     let exercise_name: String
     let exercise_image: String
     let sets: Int

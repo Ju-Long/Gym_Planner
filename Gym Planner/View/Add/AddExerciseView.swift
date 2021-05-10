@@ -178,7 +178,7 @@ struct AddExerciseView: View {
     }
     
     func addNewExercise() {
-        let url = URL(string: "https://babasama.com/add_user_has_exercise_data?user_id=\(user.user_id)&username=\(user.username)&user_password=\(user.user_password)&user_has_exercise_id=\(exercise.user_has_exercise_id)&sets=\(exercise.sets)&reps=\(exercise.reps)&weight=\(exercise.weight)&date=\(Int(exercise.date.timeIntervalSince1970 * 1000))")
+        let url = URL(string: "https://babasama.com/gym_planner/add_edit_exercise_data?username=\(user.username)&password=\(user.user_password)&user_has_exercise_id=\(exercise.user_has_exercise_id)&sets=\(exercise.sets)&reps=\(exercise.reps)&weight=\(exercise.weight)&date=\(Int(exercise.date.timeIntervalSince1970))")
         let request = URLRequest(url: url!)
         URLSession.shared.dataTask(with: request) { data, response, error  in
             guard let data = data else {

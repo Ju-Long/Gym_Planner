@@ -60,7 +60,7 @@ struct DeleteView: View {
     }
     
     func loadExerciseData() {
-        guard let url = URL(string: "https://babasama.com/user_has_exercise_data?user_id=\(user.user_id)&user_password=\(user.user_password)&day=everyday") else {
+        guard let url = URL(string: "https://babasama.com/gym_planner/get_all_future_exercise_data?username=\(user.username)&password=\(user.user_password)") else {
             print("Your API end point is invalid")
             return
         }

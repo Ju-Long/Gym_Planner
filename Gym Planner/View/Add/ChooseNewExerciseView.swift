@@ -44,7 +44,7 @@ struct ChooseNewExerciseView: View {
     }
     
     func loadExercise() {
-        guard let url = URL(string: "https://babasama.com/user_has_exercise?user_id=\(user.user_id)&user_password=\(user.user_password)") else {
+        guard let url = URL(string: "https://babasama.com/gym_planner/get_user_exercise?username=\(user.username)&password=\(user.user_password)") else {
             print("Your API end point is invalid")
             return
         }
@@ -52,6 +52,7 @@ struct ChooseNewExerciseView: View {
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
                 if let response = try? JSONDecoder().decode([UserHasExercise].self, from: data) {
+                    
                     DispatchQueue.main.async {
                         self.userhasexercise = response
                         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {

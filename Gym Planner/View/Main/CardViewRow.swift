@@ -7,7 +7,6 @@ struct CardViewRow: View {
     @Binding var showEdit: Bool
     var userHasExercise: UserHasExerciseData
     @Binding var user: SelectedUser
-    @Binding var message: String
     static let mainDateFormat: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd.MM.y"
@@ -22,12 +21,6 @@ struct CardViewRow: View {
                     .frame(alignment: .center)
                     .font(.title3)
                     .foregroundColor(.white)
-                if message == "everyday" {
-                    Text(userHasExercise.date, formatter: Self.mainDateFormat)
-                        .frame(alignment: .trailing)
-                        .font(.title3)
-                        .foregroundColor(Color(.gray))
-                }
             }
                 .frame(width: maxWidth*0.95, height: 30)
             .background(RoundedCorners(tl: 30, tr: 30, bl: 0, br: 0).fill(color))
@@ -41,7 +34,7 @@ struct CardViewRow: View {
                     .overlay(Circle().stroke(Color.black, lineWidth: 2))
                 Button(action: {
                     showEdit.toggle()
-                    selectedExercise.data_id = userHasExercise.data_id
+                    selectedExercise.user_has_exercise_id = userHasExercise.user_has_exercise_id
                     selectedExercise.date = userHasExercise.date
                     selectedExercise.name = userHasExercise.exercise_name
                     selectedExercise.sets = userHasExercise.sets
@@ -83,8 +76,7 @@ struct CardViewRow: View {
     }
     
     func new_set() {
-        let url = URL(string: "https://babasama.com/new_set_done?data_id=\(userHasExercise.data_id)&sets_done=\(userHasExercise.sets_done + 1)&date=\(Int(userHasExercise.date.timeIntervalSince1970 * 1000))&username=\(user.username)&user_password=\(user.user_password)")
-        print(url!)
+        let url = URL(string: "https://babasama.com/gym_planner/new_set_done?username=\(user.username)&password=\(user.user_password)&data_id=\(userHasExercise.data_id)&date=\(Int(userHasExercise.date.timeIntervalSince1970) - 1956614400)")
         let request = URLRequest(url: url!)
         URLSession.shared.dataTask(with: request) { data, response, error  in
             guard let data = data else {
@@ -92,7 +84,6 @@ struct CardViewRow: View {
                 return
             }
             if let decoded = try? JSONDecoder().decode([dataOutput].self, from: data) {
-                print(decoded)
                 showMessage = "👍"
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
                     showMessage = ""

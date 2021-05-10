@@ -76,8 +76,7 @@ struct EditExerciseView: View {
                                     .font(.headline)
                                 Text(self.showSet ? "⌄" : ">")
                                     .foregroundColor(.gray)
-                            }
-                        })
+                            }})
                     }.frame(height: 40)
                     
                     if showSet {
@@ -86,10 +85,7 @@ struct EditExerciseView: View {
                             Picker("", selection: $exercise.sets) {
                                 ForEach(0..<31) { index in
                                     Text("\(index)").tag(index)
-                                }
-                            }
-                        }
-                    }
+                                }}}}
                     
                     HStack {
                         Text("Choose The Amount of Reps")
@@ -106,8 +102,7 @@ struct EditExerciseView: View {
                                     .font(.headline)
                                 Text(self.showRep ? "⌄" : ">")
                                     .foregroundColor(.gray)
-                            }
-                        })
+                            }})
                     }.frame(height: 40)
                     
                     if showRep {
@@ -116,10 +111,7 @@ struct EditExerciseView: View {
                             Picker("", selection: $exercise.reps) {
                                 ForEach(0..<31) { index in
                                     Text("\(index)").tag(index)
-                                }
-                            }
-                        }
-                    }
+                                }}}}
                     
                     HStack {
                         Text("Choose The Weight (optional)")
@@ -136,14 +128,12 @@ struct EditExerciseView: View {
                                     .font(.headline)
                                 Text(self.showWeight ? "⌄" : ">")
                                     .foregroundColor(.gray)
-                            }
-                        })
+                            }})
                         .alert(isPresented: $showComplete, content: {
                             Alert(title: Text(message), dismissButton: .default(Text("Ok"), action: {
                                 showComplete = false
                                 presentationMode.wrappedValue.dismiss()
-                            }))
-                        })
+                            }))})
                     }.frame(height: 40)
                     
                     if showWeight {
@@ -151,11 +141,7 @@ struct EditExerciseView: View {
                             Spacer()
                             Picker("", selection: $exercise.weight) {
                                 ForEach(Array(stride(from: 0, to: 500, by: 2.5)), id:\.self) { index in
-                                    Text("\(index, specifier: "%.1f")").tag(index)
-                                }
-                            }
-                        }
-                    }
+                                    Text("\(index, specifier: "%.1f")").tag(index)}}}}
                 }
                 .listStyle(PlainListStyle())
                 Button(action: {
@@ -185,7 +171,7 @@ struct EditExerciseView: View {
     }
     
     func editExercise() {
-        let url = URL(string: "https://babasama.com/edit_user_has_exercise_data?username=\(user.username)&user_password=\(user.user_password)&data_id=\(exercise.data_id)&sets=\(exercise.sets)&reps=\(exercise.reps)&sets_done=\(exercise.sets_done)&weight=\(exercise.weight)&date=\(Int(exercise.date.timeIntervalSince1970 * 1000))")
+        let url = URL(string: "https://babasama.com/gym_planner/add_edit_exercise_data?username=\(user.username)&password=\(user.user_password)&user_has_exercise_id=\(exercise.user_has_exercise_id)&sets=\(exercise.sets)&reps=\(exercise.reps)&weight=\(exercise.weight)&date=\(Int(exercise.date.timeIntervalSince1970) - 1956614400)")
         let request = URLRequest(url: url!)
         URLSession.shared.dataTask(with: request) { data, response, error  in
             guard let data = data else {
@@ -193,8 +179,8 @@ struct EditExerciseView: View {
                 return
             }
             if let decoded = try? JSONDecoder().decode([dataOutput].self, from: data) {
+                showComplete.toggle()
                 message = decoded[0].output
-                showComplete = true
             }
         }.resume()
     }

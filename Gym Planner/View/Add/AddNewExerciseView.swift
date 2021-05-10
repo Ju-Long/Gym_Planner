@@ -5,6 +5,7 @@ struct AddNewExerciseView: View {
     @State private var showingImagePicker = false
     @State private var image: Image?
     @State private var inputImage: UIImage?
+    @State private var blankimage = UIImage(named: "clear")
     @Binding var user: SelectedUser
     @Binding var showAddExercise: Bool
     var body: some View {
@@ -48,7 +49,7 @@ struct AddNewExerciseView: View {
             .frame(width: maxWidth, height: maxHeight/2, alignment: .top)
             .navigationTitle("Add an new exercise")
             .navigationBarItems(trailing: Button(action: {
-                let success = saveImage(image: inputImage!)
+                let success = saveImage(image: inputImage ?? blankimage!)
                 if let image = getSavedImage(named: "\(exercise_name)") {
                     print(image)
                     addExercise()
@@ -91,8 +92,7 @@ struct AddNewExerciseView: View {
     }
     
     func addExercise() {
-        let url = URL(string: "https://babasama.com/new_exercise?exercise_name=\(exercise_name)&exercise_image=\(exercise_name)&user_id=\(user.user_id)&username=\(user.username)&user_password=\(user.user_password)")
-        print(url!)
+        let url = URL(string: "https://babasama.com/gym_planner/add_new_exercise?username=\(user.username)&password=\(user.user_password)&exercise_name=\(exercise_name)&exercise_image=\(exercise_name)")
         let request = URLRequest(url: url!)
         URLSession.shared.dataTask(with: request) { data, response, error  in
             guard let data = data else {

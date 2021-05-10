@@ -51,24 +51,39 @@ struct SignupView: View {
     }
     
     func signup() {
-        let url = URL(string: "https://babasama.com/new_user?username=\(user.username)&user_email=\(user.user_email)&user_password=\(user.user_password)")
-        let request = URLRequest(url: url!)
-        URLSession.shared.dataTask(with: request) { data, response, error  in
-            guard let data = data else {
-                print("No data in response: \(error?.localizedDescription ?? "Unknown error").")
-                return
-            }
-            if let decoded = try? JSONDecoder().decode([User].self, from: data) {
-                user.user_id = decoded[0].user_id
-                showSignup = false
-                showLogin = false
-                showMain = true
+        if user.username.isEmpty || user.user_email.isEmpty || user.user_password.isEmpty {
+            self.error = "Username or Email or Password field is empty"
+        } else {
+            if isValidEmail(user.user_email) {
+                let url = URL(string: "https://babasama.com/gym_planner/signup?username=\(user.username)&password=\(user.user_password)&email=\(user.user_email)")
+                let request = URLRequest(url: url!)
+                URLSession.shared.dataTask(with: request) { data, response, error  in
+                    guard let data = data else {
+                        print("No data in response: \(error?.localizedDescription ?? "Unknown error").")
+                        return
+                    }
+                    if let decoded = try? JSONDecoder().decode([User].self, from: data) {
+                        user.user_id = decoded[0].user_id
+                        showSignup = false
+                        showLogin = false
+                        showMain = true
+                    } else {
+                        user.username = ""
+                        user.user_email = ""
+                        user.user_password = ""
+                        self.error = "User Already Exist"
+                    }
+                }.resume()
             } else {
-                user.username = ""
-                user.user_email = ""
-                user.user_password = ""
-                self.error = "User Already Exist"
+                self.error = "Invalid Email Format"
             }
-        }.resume()
+        }
+    }
+    
+    func isValidEmail(_ email: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: email)
     }
 }

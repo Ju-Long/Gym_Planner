@@ -53,21 +53,25 @@ struct LoginView: View {
     }
     
     func login() {
-        let url = URL(string: "https://babasama.com/user?username=\(user.username)&user_password=\(user.user_password)")
-        let request = URLRequest(url: url!)
-        URLSession.shared.dataTask(with: request) { data, response, error  in
-            guard let data = data else {
-                print("No data in response: \(error?.localizedDescription ?? "Unknown error").")
-                return
-            }
-            if let decoded = try? JSONDecoder().decode([User].self, from: data) {
-                showLogin = false
-                showMain = true
-                user.user_id = decoded[0].user_id
-            } else {
-                user.user_password = ""
-                self.error = "Username or Password entered wrongly"
-            }
-        }.resume()
+        if user.username.isEmpty || user.user_password.isEmpty {
+            self.error = "Username or Password is not filled"
+        } else {
+            let url = URL(string: "https://babasama.com/gym_planner/login?username=\(user.username)&password=\(user.user_password)")
+            let request = URLRequest(url: url!)
+            URLSession.shared.dataTask(with: request) { data, response, error  in
+                guard let data = data else {
+                    print("No data in response: \(error?.localizedDescription ?? "Unknown error").")
+                    return
+                }
+                if let decoded = try? JSONDecoder().decode([User].self, from: data) {
+                    showLogin = false
+                    showMain = true
+                    user.user_id = decoded[0].user_id
+                } else {
+                    user.user_password = ""
+                    self.error = "Username or Password entered wrongly"
+                }
+            }.resume()
+        }
     }
 }
